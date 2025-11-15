@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jibin-echo-app-ingress
+  namespace: jibin-eks-activity
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "jibin-echoapp.sctp-sandbox.com" # Route53 Record
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "jibin-echoapp.sctp-sandbox.com" # Route53 Record
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jibin-echo-service
+            port:
+              number: 80
